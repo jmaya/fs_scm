@@ -5,7 +5,7 @@ module Capistrano
     module SCM
       class Fs < Base
         def head
-          ""
+          last_modified_directory
         end
 
         # Simply does a copy from the :repository directory to the
@@ -25,6 +25,10 @@ module Capistrano
         # log: There's no log, so it just echos from and to.
         def log(from="", to="")
           "No SCM: #{from} - #{to}"
+        end
+
+        def last_modified_directory
+          File.basename(Dir.glob(File.join(variable(:repository), "*")).reject {|f| File.file? f }.sort_by {|o| File.mtime(o) }.shift)
         end
       end
     end
