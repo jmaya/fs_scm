@@ -28,7 +28,7 @@ module Capistrano
         end
 
         def last_modified_directory
-          File.basename(Dir.glob(File.join(variable(:repository), "*")).reject {|f| File.file? f }.sort_by {|o| File.mtime(o) }.shift)
+          File.basename(Dir.glob(File.join(variable(:repository), "*")).reject {|f| File.file? f }.sort_by {|o| File.ctime(o) }.shift)
         end
       end
     end
